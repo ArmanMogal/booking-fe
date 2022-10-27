@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react"
+import "./App.css"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import MovieSelector from "./components/MovieSelector"
+import SeatAvailability from "./components/SeatAvailability"
+import SeatMatrix from "./components/SeatMatrix"
+import PriceCalculator from "./components/PriceCalculator"
+
+import MovieContext from './contexts/MovieContext'
+
+const App = () => {
+
+	const [movies, EditMovies] = useState({
+		movieNames: {
+			"Bloodshot": 10,
+			"The girl on the Train": 8,
+			"The invisible Man": 11,
+			"Onward": 12,
+			"My Spy": 9
+		},
+		moviePrice: 10,
+		totalSeats: 0,
+		seatNumbers: []
+	})
+
+	return (
+		<div className="main container">
+			<MovieContext.Provider value={{ movies, changeState: EditMovies }}>
+				<MovieSelector />
+				<SeatMatrix />
+				<SeatAvailability />
+				<PriceCalculator />
+			</MovieContext.Provider>
+		</div>
+	)
 }
 
-export default App;
+export default App
